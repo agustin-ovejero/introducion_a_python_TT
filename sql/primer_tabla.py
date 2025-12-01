@@ -13,4 +13,13 @@ conection.execute('''
 
 
 conection.commit() # commit guarda los cambios de mi tabla
-conection.close()
+
+conection.execute(
+    # esta es la forma correcta de usar la sintaxis de SQL con python
+    '''
+    INSERT INTO produc (nombre, precio) -- dento de commillas el codigo sql
+    VALUES(?, ?)
+    ''',
+    # fuera de las comillas mis operaciones de python
+    ("lapiz", 25.50)
+)
