@@ -31,8 +31,8 @@ cursor = conection.cursor() # Para poder recibir los datos de mi tabla es necesa
 cursor.execute('SELECT * FROM produc')
 productos = cursor.fetchall()# con fetchall conseguimos los datos
 #print(productos)
-for producto in productos:
-    print(f"ID: {producto[0]} Nombre: {producto[1]}, Precio: {producto[2]} ")
+# for producto in productos:
+#     print(f"ID: {producto[0]} Nombre: {producto[1]}, Precio: {producto[2]} ")
 
 # ejemplo de actulaizacioón con UPDATE
 nuevo_precio = 250.0
@@ -42,5 +42,16 @@ conection.commit()
 
 cursor.execute('SELECT * FROM produc')
 productos = cursor.fetchall()
+# for producto in productos:
+#     print(f"ID: {producto[0]} Nombre: {producto[1]}, Precio: {producto[2]} ")
+    
+    
+# Delete en SQL    
+# SIEMPRE USAR WHERE CUANDO USAMO DELETE
+id = 2
+cursor.execute('DELETE FROM produc WHERE id = ?', (id,))
+conection.commit()
+cursor.execute('SELECT * FROM produc')
+productos = cursor.fetchall()
 for producto in productos:
-    print(f"ID: {producto[0]} Nombre: {producto[1]}, Precio: {producto[2]} ")
+     print(f"ID: {producto[0]} Nombre: {producto[1]}, Precio: {producto[2]} ")
