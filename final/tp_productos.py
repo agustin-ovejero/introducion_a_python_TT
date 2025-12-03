@@ -15,6 +15,55 @@ coneccion.execute('''
     )
     ''')
 
+def eliminando_producto(dato):
+    try:
+        cursor.execute('DELETE FROM productostp WHERE id = ?', (dato,))
+        coneccion.commit()
+    except Exception as e:
+        print("algo salio mal", e)
+        coneccion.rollback()
+        coneccion.close()
+
+def actualizar_producto(dato, nombre, descripcion, catidad, precio, categoria):
+    try:
+        coneccion.execute("""
+            UPDATE productostp SET nombre = ?, descripcion = ?, cantidad = ?, precio = ?, categoria = ?
+            WHERE id = ?
+            """, (nombre, descripcion, catidad, precio, categoria, dato)
+        )
+        coneccion.commit()
+    except Exception:
+        print("algo salio mal")
+        coneccion.rollback()
+        coneccion.close()
+    
+    
+def agregar_producto(nombre, descripcion, cantidad, precio, categoria):
+    try:
+        coneccion.execute('''
+            INSERT INTO productostp (nombre, descripcion, cantidad, precio, categoria) 
+            VALUES (?, ?, ?, ?, ?)''', (nombre, descripcion, cantidad, precio, categoria)
+        )
+        coneccion.commit()
+    except Exception:
+        print("algo salio mal")
+        coneccion.rollback()
+        coneccion.close()
+        
+        
+def mostrar_productos():
+    cursor.execute('SELECT * FROM productostp')
+    datos = cursor.fetchall()
+    for i in datos:
+        print(f"ID: {i[0]} | Nombre: {i[1]} | Descripción: {i[2]} | Cantidad: {i[3]} | Precio: {i[4]} | Categoria: {i[5]} ")
+    print("\n")
+    
+def eleccion(x): 
+    """Devolvera la elección de preferencia del usuario, para mostar los productos de la base de datos"""
+    if x == 1:
+        
+    
+    
 def dar_nombre():
     """Validara y retornara el nombre del producto"""
     try:
@@ -104,14 +153,48 @@ while continuo:
     
     if eligio == 1:
         nombre, descripcion, catidad, precio, categoria = creacion_de_datos()
+        agregar_producto(nombre, descripcion, catidad, precio, categoria)
+        print("se agrego el producto correctamente", "\n")
+        
     elif eligio == 2:
-        print("queso")
+        print("Mostrando productos", "\n")
+        mostrar_productos()
+        
     elif eligio == 3:
-        print("queso")
+        print("Mostrando productos", "\n")
+        mostrar_productos()
+        try:
+            dato = int(input("elija la id a editar: "))
+            if dato == 0:
+                raise ValueError
+        except ValueError:
+            print("dato invalido")
+        nombre, descripcion, catidad, precio, categoria = creacion_de_datos()
+        actualizar_producto(dato, nombre, descripcion, catidad, precio, categoria)
+        print("actualización completada")
+        
+        
     elif eligio == 4:    
-        print("queso")
+        print("Mostrando productos", "\n")
+        mostrar_productos()
+        try:
+            dato = int(input("elija la id a editar: "))
+            if dato == 0:
+                raise ValueError
+        except ValueError:
+            print("dato invalido")
+        eliminando_producto(dato)
+        print("producto eliminado")
     elif eligio == 5:
-        print("queso")
+        print(sub_menu_punto_cinco)
+        try:
+            dato = int(input("elija la opcion: "))
+        except ValueError:
+            print("dato invalido")
+        if dato == 1:
+            opcion = eleccion()
+            buscar_de_campos(dato, )
+        
     else:
         print("Opcion invalida")
         
