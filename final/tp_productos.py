@@ -36,4 +36,17 @@ while continuo:
     except ValueError:
         print("dato invalido")
     
+    if eligio == 1:
+        print("queso")
+    elif eligio == 2:
+        print("queso")
+    elif eligio == 3:
+        print("queso")
+    elif eligio == 4:    
+        print("queso")
+    elif eligio == 5:
+        print("queso")
+    else:
+        print("Opcion invalida")
+        
     
