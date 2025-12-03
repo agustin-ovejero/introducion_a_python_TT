@@ -15,6 +15,72 @@ coneccion.execute('''
     )
     ''')
 
+def dar_nombre():
+    """Validara y retornara el nombre del producto"""
+    try:
+        dato = input("ingrese el nombre: ")
+        if len(dato) == 0:
+            raise ValueError
+    except ValueError:
+        print("Dato ingresado invalido")
+    return dato
+
+def dar_descripcion():
+    """Validara y retornara la descripción del producto"""
+    
+    try:
+         dato = input("ingrese la descripción: ")
+         if len(dato) == 0:
+             raise ValueError
+    except ValueError:
+         print("Dato ingresado invalido")
+    return dato
+    
+def dar_cantidad():    
+    """Validara y retornara la cantidad del producto"""
+        
+    try:
+         dato = int(input("ingrese la cantidad: "))
+         if dato == 0:
+             raise ValueError
+    except ValueError:
+         print("Dato ingresado invalido")
+    return dato
+
+def dar_precio():
+    """Validara y retornara el precio del producto"""
+            
+    try:
+         dato = int(input("ingrese el precio: "))
+         if dato == 0:
+             raise ValueError
+    except ValueError:
+         print("Dato ingresado invalido")
+    return dato
+    
+def dar_categoria():
+    """Validara y retornara la categoria del producto"""
+                
+    try:
+         dato = input("ingrese la categoria: ")
+         if len(dato) == 0:
+             raise ValueError
+    except ValueError:
+         print("Dato ingresado invalido")
+    return dato
+    
+
+def creacion_de_datos():
+    """
+    Funcion que retornara el nombre, descripción, cantidad, precio y categoria
+    para la creación de un producto
+    """
+    nombre = dar_nombre()
+    descripcion = dar_descripcion()
+    cantidad = dar_cantidad()
+    precio = dar_precio()
+    categori = dar_categoria()
+    return (nombre, descripcion, cantidad, precio, categori)
 
 menu = """
 1. Registrar nuevos productos
@@ -37,7 +103,7 @@ while continuo:
         print("dato invalido")
     
     if eligio == 1:
-        print("queso")
+        nombre, descripcion, catidad, precio, categoria = creacion_de_datos()
     elif eligio == 2:
         print("queso")
     elif eligio == 3:
