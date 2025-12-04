@@ -16,7 +16,19 @@ coneccion.execute('''
     )
     ''')
 
-
+def  dando_productos_por_comparacion(dato, dato_a_comparar):
+    if dato == 1:
+        cursor.execute('SELECT * FROM productostp WHERE precio = ?', (dato_a_comparar,))
+        los_datos = cursor.fetchall()
+    elif dato == 2:
+        cursor.execute('SELECT * FROM productostp WHERE precio >= ?', (dato_a_comparar,))
+        los_datos = cursor.fetchall()
+    elif dato == 3:
+        cursor.execute('SELECT * FROM productostp WHERE precio <= ?', (dato_a_comparar,))
+        los_datos = cursor.fetchall()
+    for i in los_datos: 
+        print(f"ID: {i[0]} | Nombre: {i[1]} | Descripción: {i[2]} | Cantidad: {i[3]} | Precio: {i[4]} | Categoria: {i[5]} ")
+    print("\n")
 
 def buscar_de_campos(dato, opcion):
     if dato == 1:
@@ -178,6 +190,7 @@ menu = """
 4. Eliminar Productos
 5. Busccar producto
 6. Reporte de productos
+7. Salir
 """
 sub_menu_punto_cinco = """
 1. Buscar por id
@@ -246,16 +259,16 @@ while continuo:
         except ValueError:
             print("opción invalida")
         try:
-            dato_a_comparar = int(input("ingrese el dato para comparar: "))
+            dato_a_comparar = float(input("ingrese el dato para comparar: "))
         except ValueError:
             print("opción invalida")
             
         dando_productos_por_comparacion(dato, dato_a_comparar)
-        
-        if dato == 1:
-            try
-        
+        print("ejecución completada")
+    elif eligio == 7: 
+        continuo = 0
     else:
         print("Opcion invalida")
-        
+print("Adios") 
+coneccion.close()
     
