@@ -1,4 +1,3 @@
-from multiprocessing import Value
 import sqlite3
 
 
@@ -17,6 +16,7 @@ coneccion.execute('''
     ''')
 
 def  dando_productos_por_comparacion(dato, dato_a_comparar):
+    """Retornamos los productos de la base de datos que coinciden con la comparación"""
     if dato == 1:
         cursor.execute('SELECT * FROM productostp WHERE precio = ?', (dato_a_comparar,))
         los_datos = cursor.fetchall()
@@ -31,6 +31,7 @@ def  dando_productos_por_comparacion(dato, dato_a_comparar):
     print("\n")
 
 def buscar_de_campos(dato, opcion):
+    """Retornamos los productos de la base de datos que pertenescan a ciertos campos"""
     if dato == 1:
         cursor.execute('SELECT * FROM productostp WHERE id = ?', (opcion,))
         los_datos = cursor.fetchall()
@@ -46,6 +47,7 @@ def buscar_de_campos(dato, opcion):
         
 
 def eliminando_producto(dato):
+    """Eliminamos productos de la base de datos por id"""
     try:
         cursor.execute('DELETE FROM productostp WHERE id = ?', (dato,))
         coneccion.commit()
@@ -55,6 +57,7 @@ def eliminando_producto(dato):
         coneccion.close()
 
 def actualizar_producto(dato, nombre, descripcion, catidad, precio, categoria):
+    """Actualizamos productos de la base de datos a trabes de un id"""
     try:
         coneccion.execute("""
             UPDATE productostp SET nombre = ?, descripcion = ?, cantidad = ?, precio = ?, categoria = ?
@@ -69,6 +72,7 @@ def actualizar_producto(dato, nombre, descripcion, catidad, precio, categoria):
     
     
 def agregar_producto(nombre, descripcion, cantidad, precio, categoria):
+    """Función que agrega productos a la base de datos"""
     try:
         coneccion.execute('''
             INSERT INTO productostp (nombre, descripcion, cantidad, precio, categoria) 
@@ -82,6 +86,7 @@ def agregar_producto(nombre, descripcion, cantidad, precio, categoria):
         
         
 def mostrar_productos():
+    """Función que muestra los productos de la base de datos"""
     cursor.execute('SELECT * FROM productostp')
     datos = cursor.fetchall()
     for i in datos:
@@ -93,7 +98,7 @@ def eleccion(x):
     if x == 1:
         try:
             dato_elegido = int(input("ingrese el id para buscar el producto: "))
-            if dato_elegido == 1:
+            if dato_elegido == 0:
                 raise ValueError
         except ValueError:
             print("dato invalido")
@@ -170,7 +175,6 @@ def dar_categoria():
          print("Dato ingresado invalido")
     return dato
     
-
 def creacion_de_datos():
     """
     Funcion que retornara el nombre, descripción, cantidad, precio y categoria
