@@ -1,3 +1,4 @@
+from multiprocessing import Value
 import sqlite3
 
 
@@ -14,6 +15,23 @@ coneccion.execute('''
     categoria TEXT NOT NULL
     )
     ''')
+
+
+
+def buscar_de_campos(dato, opcion):
+    if dato == 1:
+        cursor.execute('SELECT * FROM productostp WHERE id = ?', (opcion,))
+        los_datos = cursor.fetchall()
+    elif dato == 2:
+        cursor.execute('SELECT * FROM productostp WHERE nombre = ?', (opcion,))
+        los_datos = cursor.fetchall()
+    elif dato == 3:
+        cursor.execute('SELECT * FROM productostp WHERE categoria = ?', (opcion,))
+        los_datos = cursor.fetchall()
+    for i in los_datos: 
+        print(f"ID: {i[0]} | Nombre: {i[1]} | Descripción: {i[2]} | Cantidad: {i[3]} | Precio: {i[4]} | Categoria: {i[5]} ")
+    print("\n")
+        
 
 def eliminando_producto(dato):
     try:
@@ -61,6 +79,28 @@ def mostrar_productos():
 def eleccion(x): 
     """Devolvera la elección de preferencia del usuario, para mostar los productos de la base de datos"""
     if x == 1:
+        try:
+            dato_elegido = int(input("ingrese el id para buscar el producto: "))
+            if dato_elegido == 1:
+                raise ValueError
+        except ValueError:
+            print("dato invalido")
+    elif x == 2:
+        try:
+            dato_elegido = input("ingrese el nombre para buscar el producto: ")
+            if len(dato_elegido) == 0:
+                raise ValueError
+        except ValueError:
+            print("dato invalido")
+    elif x == 3:
+        try:
+            dato_elegido = input("ingrese la categoria para buscar los productos: ")
+            if len(dato_elegido) == 0:
+                raise ValueError
+        except ValueError:
+            print("dato invalido")
+    return dato_elegido
+        
         
     
     
@@ -137,11 +177,17 @@ menu = """
 3. Actualizar productos
 4. Eliminar Productos
 5. Busccar producto
+6. Reporte de productos
 """
 sub_menu_punto_cinco = """
 1. Buscar por id
 2. Buscar por nombre
 3. Buscar por categoria
+"""
+sub_menu_punto_seis  = """
+1. Igual a ...
+2. Mayor a ...
+3. Menor a ...
 """
 continuo = 1
 while continuo:
@@ -172,8 +218,6 @@ while continuo:
         nombre, descripcion, catidad, precio, categoria = creacion_de_datos()
         actualizar_producto(dato, nombre, descripcion, catidad, precio, categoria)
         print("actualización completada")
-        
-        
     elif eligio == 4:    
         print("Mostrando productos", "\n")
         mostrar_productos()
@@ -186,14 +230,30 @@ while continuo:
         eliminando_producto(dato)
         print("producto eliminado")
     elif eligio == 5:
+        mostrar_productos()
         print(sub_menu_punto_cinco)
         try:
             dato = int(input("elija la opcion: "))
         except ValueError:
             print("dato invalido")
+        opcion = eleccion(dato)
+        buscar_de_campos(dato, opcion)
+        print("ejecución completada")
+    elif eligio == 6:
+        print(sub_menu_punto_seis)
+        try:
+            dato = int(input("elija la opcion: "))
+        except ValueError:
+            print("opción invalida")
+        try:
+            dato_a_comparar = int(input("ingrese el dato para comparar: "))
+        except ValueError:
+            print("opción invalida")
+            
+        dando_productos_por_comparacion(dato, dato_a_comparar)
+        
         if dato == 1:
-            opcion = eleccion()
-            buscar_de_campos(dato, )
+            try
         
     else:
         print("Opcion invalida")
